@@ -1,8 +1,8 @@
 module.exports = {
   host: 'localhost',
   user: 'root',
-  password: 'password',
-  database: 'concertDB'
+  password: '123456',
+  database: 'charityevents_db'
 };
 
 
