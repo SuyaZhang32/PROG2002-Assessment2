@@ -5,21 +5,12 @@ const conn = db.getconnection();
 conn.connect();
 
 router.get('/', (req, res, next) => {
-  const { status = 'upcoming' } = req.query;
-
-  const where = ['suspended = 0'];
-  if (status === 'upcoming') {
-    where.push('(end_datetime >= NOW())');
-  } else {
-    where.push('(end_datetime < NOW())');
-  }
-
   const sql = `
     SELECT id, name, category_id, start_datetime, end_datetime,
            location_city, location_venue, image_url, ticket_price
     FROM events
-    WHERE ${where.join(' AND ')}
-    ORDER BY start_datetime ASC
+    WHERE suspended = 0
+    ORDER BY start_datetime DESC
   `;
 
   conn.execute(sql, (err, rows) => {
