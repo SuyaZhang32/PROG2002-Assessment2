@@ -105,8 +105,12 @@
     const meta = document.createElement('div');
     meta.className = 'meta';
     meta.appendChild(badge);
-    const when = document.createElement('span'); when.textContent = new Date(ev.start_datetime).toLocaleString(); meta.appendChild(when);
-    const where = document.createElement('span'); where.textContent = ev.location_city || '-'; meta.appendChild(where);
+    const when = document.createElement('span');
+    when.textContent = new Date(ev.start_datetime).toLocaleString();
+    meta.appendChild(when);
+    const where = document.createElement('span');
+    where.textContent = ev.location_city || '-';
+    meta.appendChild(where);
     body.appendChild(meta);
 
 
