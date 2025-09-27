@@ -186,6 +186,76 @@
     color: white;
 }
 
+.pill {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: #f3f4f6;
+    border: 1px solid #e5e7eb;
+    color: #39364f;
+    font-size: 12px;
+}
+
+
+.form {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-top: 8px;
+}
+
+
+.form-row {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.form-row label {
+    font-size: 13px;
+    color: #6b7280;
+}
+
+.form-row input[type="date"],
+.form-row input[type="text"],
+.form-row select {
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1px solid rgba(148,163,184,0.35);
+    background: #fff;
+    color: #111;
+    outline: none;
+}
+
+.form-row input[type="date"]:focus,
+.form-row input[type="text"]:focus,
+.form-row select:focus {
+    border-color: #3160cc;
+    box-shadow: 0 0 0 2px rgba(49,96,204,0.15);
+}
+
+.form-actions {
+    grid-column: 1 / -1;
+    display: flex;
+    gap: 8px;
+    margin-top: 4px;
+}
+
+.notice {
+    padding: 10px;
+    border: 1px dashed rgba(148,163,184,0.35);
+    border-radius: 8px;
+    background: #fafafa;
+    color: #6b7280;
+    margin: 10px 0;
+    font-size: 14px;
+}
+
+.notice.error {
+    border-color: #d1434a;
+    background: #fff5f6;
+    color: #a12a31;
+}
+
 @media (max-width: 900px) {
     .cards{
         grid-template-columns: repeat(2, 1fr);
@@ -196,4 +266,8 @@
     .cards{
         grid-template-columns: 1fr;
     }
+}
+
+@media (max-width: 700px) {
+    .form { grid-template-columns: 1fr; }
 }
