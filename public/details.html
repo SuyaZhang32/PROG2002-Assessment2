@@ -75,6 +75,7 @@
 </main>
 
 <script>
+  // get dom elements
   const loading = document.getElementById('loading');
   const notfound = document.getElementById('notfound');
   const detail = document.getElementById('detail');
@@ -93,12 +94,16 @@
   const progress = document.getElementById('progress');
   const btn = document.getElementById('btn-register');
 
+  // parse id from location href
   const url = new URL(location.href);
   const id = url.searchParams.get('id');
+
+  // show not found if id invalid
   if (!id || Number(id) <= 0) {
     loading.hidden = true;
     notfound.hidden = false;
   } else {
+    // request event API by id
     fetch('/api/events/' + id)
       .then(res => res.json())
       .then(res => {
@@ -110,29 +115,36 @@
 
         const ev = res.data
 
+        // set event image
         img.src = ev.image_url;
         img.alt = ev.name || '';
         img.style.height = '500px';
 
+        // set event status
         const isPast = new Date(ev.end_datetime) < Date.now();
         status.className = 'badge ' + (isPast ? 'badge-past' : 'badge-upcoming');
         status.textContent = isPast ? 'Past' : 'Upcoming';
 
+        // set event datetime
         when.textContent = new Date(ev.start_datetime).toLocaleString();
         where.textContent = ev.location_city || '-';
 
+        // set event title/short/desc
         title.textContent = ev.name || 'Untitled event';
         short.textContent = ev.short_description || '';
         desc.textContent = ev.description || '';
 
+        // set event meta
         venue.textContent = ev.location_venue || '-';
         address.textContent = ev.address_line || '-';
         price.textContent = Number(ev.ticket_price).toFixed(2) || '0.00';
         goal.textContent = Number(ev.goal_amount).toFixed(2) || '0.00';
         progress.textContent = Number(ev.progress_amount).toFixed(2) || '0.00';
 
+        // show detail
         detail.hidden = false;
 
+        // add event listener for register button
         btn.addEventListener('click', function(){
           alert('Registration is under construction.');
         });

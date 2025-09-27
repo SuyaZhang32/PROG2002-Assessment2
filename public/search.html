@@ -83,59 +83,63 @@
 
 <script>
   function createCard(ev){
+    // create card
     const card = document.createElement('article');
     card.className = 'card';
 
+    // create image
     const img = document.createElement('img');
     img.className = 'thumb';
     img.alt = '';
     img.src = ev.image_url;
     card.appendChild(img);
 
-
+    // create card body
     const body = document.createElement('div');
     body.className = 'card-body';
 
+    // create status
     const status = new Date(ev.end_datetime) < new Date() ? 'past' : 'upcoming';
     const badge = document.createElement('span');
     badge.className = 'badge ' + (status === 'past' ? 'badge-past' : 'badge-upcoming');
     badge.textContent = status === 'past' ? 'Past' : 'Upcoming';
 
-
+    // create meta
     const meta = document.createElement('div');
     meta.className = 'meta';
     meta.appendChild(badge);
     const when = document.createElement('span');
-    when.textContent = new Date(ev.start_datetime).toLocaleString();
+    when.textContent = new Date(ev.start_datetime).toLocaleString(); // format date
     meta.appendChild(when);
     const where = document.createElement('span');
     where.textContent = ev.location_city || '-';
     meta.appendChild(where);
     body.appendChild(meta);
 
-
+    // create title
     const title = document.createElement('div');
     title.className = 'title';
     title.textContent = ev.name;
     body.appendChild(title);
 
-
+    // create more button
     const more = document.createElement('a');
     more.className = 'btn';
     more.href = 'details.html?id=' + encodeURIComponent(ev.id);
     more.textContent = 'View details';
     body.appendChild(more);
 
-
     card.appendChild(body);
     return card;
   }
 
+  // set search result count
   function setCount(n) {
     const resultCount = document.getElementById('result-count');
     resultCount.innerText = n + (n === 1 ? ' event' : ' events');
   }
 
+  // show some information(loading/error/empty/cards) by listId
   function show(listId) {
     document.getElementById('list-loading').hidden = listId !== 'loading';
     document.getElementById('list-error').hidden = listId !== 'error';
@@ -143,45 +147,56 @@
     document.getElementById('cards').hidden = listId !== 'cards';
   }
 
+  // add event listener for search button
   document.getElementById('search-form').addEventListener('submit', (e) => {
+    // prevent default submit event
     e.preventDefault();
 
+    // get input value
     const date_from = document.getElementById('date_from').value;
     const date_to = document.getElementById('date_to').value;
     const city = document.getElementById('city').value;
     const category = document.getElementById('category_id').value;
 
+    // push to params if input value exist
     const params = [];
     if (date_from) {
-      params.push('date_from=' + encodeURIComponent(date_from));
+      params.push('date_from=' + date_from);
     }
     if (date_to) {
-      params.push('date_to=' + encodeURIComponent(date_to));
+      params.push('date_to=' + date_to);
     }
     if (city) {
-      params.push('city=' + encodeURIComponent(city));
+      params.push('city=' + city);
     }
     if (category) {
-      params.push('category_id=' + encodeURIComponent(category));
+      params.push('category_id=' + category);
     }
 
+    // create query string by join params by &
     const qs = params.join('&');
 
+    // show loading and request search API
     show('loading');
     const url = '/api/events/search' + (qs ? ('?' + qs) : '');
     fetch(url)
       .then(res => res.json())
       .then(res => {
+        // set count value
         setCount(res.length);
         if (!res.length) {
           show('empty');
           return;
         }
+
+        // create cards by response events
         const cards = document.getElementById('cards');
         cards.innerHTML = '';
         for (let i = 0; i < res.length; i++) {
           cards.appendChild(createCard(res[i]));
         }
+
+        // show cards
         show('cards');
       })
       .catch(function(){
@@ -189,20 +204,25 @@
       });
   });
 
+  // add event listener for clear button
   document.getElementById('btn-clear').addEventListener('click', () => {
+    // reset all inputs
     document.getElementById('date_from').value = '';
     document.getElementById('date_to').value = '';
     document.getElementById('city').value = '';
     document.getElementById('category_id').value = '';
     document.getElementById('cards').innerHTML = '';
+    // reset count and information
     setCount(0);
     show('empty');
   });
 
+  // request categories API when page load
   fetch('/api/categories')
     .then(res => res.json())
     .then(res => {
       const sel = document.getElementById('category_id');
+      // create and append event option by category
       for (let i = 0; i < res.length; i++) {
         let opt = document.createElement('option');
         opt.value = res[i].id;

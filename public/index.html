@@ -45,54 +45,57 @@
 
 <script>
   function createCard(ev){
+    // create card
     const card = document.createElement('article');
     card.className = 'card';
 
+    // create image
     const img = document.createElement('img');
     img.className = 'thumb';
     img.alt = '';
     img.src = ev.image_url;
     card.appendChild(img);
 
-
+    // create card body
     const body = document.createElement('div');
     body.className = 'card-body';
 
+    // create status
     const status = new Date(ev.end_datetime) < new Date() ? 'past' : 'upcoming';
     const badge = document.createElement('span');
     badge.className = 'badge ' + (status === 'past' ? 'badge-past' : 'badge-upcoming');
     badge.textContent = status === 'past' ? 'Past' : 'Upcoming';
 
-
+    // create meta
     const meta = document.createElement('div');
     meta.className = 'meta';
     meta.appendChild(badge);
     const when = document.createElement('span');
-    when.textContent = new Date(ev.start_datetime).toLocaleString();
+    when.textContent = new Date(ev.start_datetime).toLocaleString(); // format date
     meta.appendChild(when);
     const where = document.createElement('span');
     where.textContent = ev.location_city || '-';
     meta.appendChild(where);
     body.appendChild(meta);
 
-
+    // create title
     const title = document.createElement('div');
     title.className = 'title';
     title.textContent = ev.name;
     body.appendChild(title);
 
-
+    // create more button
     const more = document.createElement('a');
     more.className = 'btn';
     more.href = 'details.html?id=' + encodeURIComponent(ev.id);
     more.textContent = 'View details';
     body.appendChild(more);
 
-
     card.appendChild(body);
     return card;
   }
 
+  // request events when page load
     fetch('/api/events')
     .then(res => res.json())
     .then(res => {
@@ -102,11 +105,13 @@
         const upcoming = document.getElementById('upcoming')
         const past = document.getElementById('past')
 
+        // loop response and create card for each event
         for (let i = 0; i < res.length; i++) {
           const card = createCard(res[i])
           charityList.append(card)
         }
 
+        // set upcoming/past count
         const upcomingCount = res.filter(ev => new Date(ev.end_datetime) >= new Date()).length
         total.innerText = res.length
         upcoming.innerText = upcomingCount

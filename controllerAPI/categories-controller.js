@@ -5,6 +5,7 @@ const db = require('../event_db.js');
 const conn = db.getconnection();
 conn.connect();
 
+// get all categories
 router.get('/', (req, res, next) => {
   const conn = db.getconnection();
   conn.query('SELECT id, name FROM categories ORDER BY name ASC', (err, rows) => {
