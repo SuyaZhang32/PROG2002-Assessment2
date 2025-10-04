@@ -1,3 +1,4 @@
+// Import the required modules
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
@@ -5,6 +6,7 @@ const app = express();
 const eventAPI = require('./controllerAPI/events-controller');
 const categoryAPI = require('./controllerAPI/categories-controller');
 
+// Introduce the API controller
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 

@@ -1,3 +1,4 @@
+// Introduce module and establish database connection
 const express = require('express');
 const db = require('../event_db');
 const router = express.Router();
@@ -82,6 +83,7 @@ router.get('/:id', (req, res, next) => {
     });
   }
 
+  // SQL: Query the activity details for the specified id
   const sql = `
     SELECT id, category_id, name, short_description, description,
            start_datetime, end_datetime, location_city, location_venue, address_line,
