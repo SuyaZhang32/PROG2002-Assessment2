@@ -101,7 +101,7 @@
 }
 
 .card {
-    border: 1px solid rgba(148,163,184,0.25);
+    border: 1px solid rgba(148, 163, 184, 0.25);
     border-radius: 10px;
     padding: 12px;
 }
@@ -115,7 +115,7 @@
 
 .stat {
     background: #0b1220;
-    border: 1px solid rgba(148,163,184,0.25);
+    border: 1px solid rgba(148, 163, 184, 0.25);
     border-radius: 8px;
     padding: 8px 10px;
 }
@@ -158,7 +158,7 @@
     border-radius: 999px;
     font-size: 11px;
     color: white;
-    border: 1px solid rgba(148,163,184,0.3);
+    border: 1px solid rgba(148, 163, 184, 0.3);
 }
 
 .badge-upcoming {
@@ -173,11 +173,15 @@
 
 .btn {
     display: inline-block;
-    padding: 8px 10px;
-    border: 1px solid rgba(148,163,184,0.35);
+    padding: 8px 14px;
+    border: 1px solid rgba(148, 163, 184, 0.35);
     border-radius: 8px;
     text-decoration: none;
     color: #333;
+    background-color: #fff;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.25s ease;
 }
 
 .btn:hover {
@@ -210,6 +214,7 @@
     flex-direction: column;
     gap: 6px;
 }
+
 .form-row label {
     font-size: 13px;
     color: #6b7280;
@@ -220,7 +225,7 @@
 .form-row select {
     padding: 8px 10px;
     border-radius: 8px;
-    border: 1px solid rgba(148,163,184,0.35);
+    border: 1px solid rgba(148, 163, 184, 0.35);
     background: #fff;
     color: #111;
     outline: none;
@@ -230,7 +235,7 @@
 .form-row input[type="text"]:focus,
 .form-row select:focus {
     border-color: #3160cc;
-    box-shadow: 0 0 0 2px rgba(49,96,204,0.15);
+    box-shadow: 0 0 0 2px rgba(49, 96, 204, 0.15);
 }
 
 .form-actions {
@@ -242,7 +247,7 @@
 
 .notice {
     padding: 10px;
-    border: 1px dashed rgba(148,163,184,0.35);
+    border: 1px dashed rgba(148, 163, 184, 0.35);
     border-radius: 8px;
     background: #fafafa;
     color: #6b7280;
@@ -256,18 +261,44 @@
     color: #a12a31;
 }
 
+.progress-container {
+    background-color: #e0e0e0;
+    border-radius: 12px;
+    height: 20px;
+    width: 75%;
+    margin: 15px auto;
+    overflow: hidden;
+}
+
+.progress-bar {
+    background-color: #4CAF50;
+    height: 100%;
+    width: 0%;
+    border-radius: 12px;
+    transition: width 0.8s ease;
+}
+
+.progress-text {
+    text-align: center;
+    font-weight: 500;
+    color: #94a3b8;
+    margin-top: 6px;
+}
+
 @media (max-width: 900px) {
-    .cards{
+    .cards {
         grid-template-columns: repeat(2, 1fr);
     }
 }
 
 @media (max-width: 600px) {
-    .cards{
+    .cards {
         grid-template-columns: 1fr;
     }
 }
 
 @media (max-width: 700px) {
-    .form { grid-template-columns: 1fr; }
+    .form {
+        grid-template-columns: 1fr;
+    }
 }
