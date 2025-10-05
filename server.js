@@ -17,5 +17,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api/categories', categoryAPI);
 app.use('/api/events', eventAPI);
 
+// add 404 processing pages
+app.use((req, res) => {
+    res.status(404).send("Page Not Found");
+});
+
 // start server and listen 3060 port
 app.listen(3060, () => console.log('Server up on 3060'));
